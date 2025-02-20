@@ -52,17 +52,25 @@ export class EmailService {
       event_name: "email_campaign_stats",
       username: "MailchimpBot",
       status: "success",
-      message: `Campaign stats fetched successfully for ${report.campaign_title}.`,
+      message: `Campaign stats for "${report.campaign_title}":
+  - Total Sent: ${report.emails_sent}
+  - Total Opens: ${report.opens.opens_total}
+  - Unique Opens: ${report.opens.unique_opens}
+  - Open Rate: ${report.opens.open_rate}%
+  - Total Clicks: ${report.clicks.clicks_total}
+  - Unsubscribes: ${report.unsubscribed}
+  - Bounces: ${report.bounces.hard_bounces}`,
     };
+
     //  Send to telex
     const telexResponse = await axios.post(
       config.TELEX_WEB_HOOK,
       webhookPayload
     );
-    if (!telexResponse) {
-      throw Error("telex error");
+    if (telexResponse.data.status == "error") {
+      const message = telexResponse.data.message;
+      throw Error(message);
     }
-    console.log(telexResponse.data);
     return {
       stats,
     };
