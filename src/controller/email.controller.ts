@@ -30,3 +30,17 @@ export const createAndSendCampaign = asyncHandler(
     });
   }
 );
+
+export const getCampaignStats = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { campaignId } = req.params;
+
+    if (!campaignId) {
+      res.status(400).json({ message: "Campaign ID is required." });
+      return;
+    }
+
+    const stats = await emailService.getCampaignStats(campaignId);
+    res.status(200).json(stats);
+  }
+);
