@@ -41,6 +41,7 @@ export const getCampaignStats = asyncHandler(
     }
 
     const stats = await emailService.getCampaignStats(campaignId);
+
     res.status(200).json(stats);
   }
 );

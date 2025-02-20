@@ -1,5 +1,6 @@
 import config from "../config";
 import { mailchimpClient } from "../config/mailChimp";
+import axios from "axios";
 export class EmailService {
   public async createCampaign(
     listId: string,
@@ -36,23 +37,34 @@ export class EmailService {
     return response;
   }
 
-  /**
-   * Get campaign stats (opens, unique opens, open rate, etc.).
-   * @param campaignId - The ID of the campaign to retrieve stats for.
-   * @returns Campaign stats.
-   */
   public async getCampaignStats(campaignId: string) {
-    // try {
     const report = await mailchimpClient.reports.getCampaignReport(campaignId);
-    return {
-      total_opens: report.opens_total,
+    const stats = {
+      total_recipients: report.emails_sent,
+
+      total_opens: report.opens.opens_total,
       unique_opens: report.opens.unique_opens,
       open_rate: report.opens.open_rate,
       last_open: report.opens.last_open,
+      bounces: report.bounces.hard_bounces,
     };
-    // } catch (error) {
-    //   console.error("Error fetching campaign stats:", error);
-    //   throw new Error("Failed to fetch campaign stats.");
-    // }
+    const webhookPayload = {
+      event_name: "email_campaign_stats",
+      username: "MailchimpBot",
+      status: "success",
+      message: `Campaign stats fetched successfully for ${report.campaign_title}.`,
+    };
+    //  Send to telex
+    const telexResponse = await axios.post(
+      config.TELEX_WEB_HOOK,
+      webhookPayload
+    );
+    if (!telexResponse) {
+      throw Error("telex error");
+    }
+    console.log(telexResponse.data);
+    return {
+      stats,
+    };
   }
 }
