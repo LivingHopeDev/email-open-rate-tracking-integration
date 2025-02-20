@@ -3,16 +3,32 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "start:dev": "ts-node-dev --respawn --transpile-only ./src/index",
+    "start": "ts-node --transpile-only src/index.ts",
+    "build": "tsc"
+  },
   "devDependencies": {
     "@types/express": "^5.0.0",
+    "@types/mailchimp__mailchimp_transactional": "^1.0.10",
     "@types/node": "^22.13.4",
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "@mailchimp/mailchimp_marketing": "^3.0.80",
+    "@mailchimp/mailchimp_transactional": "^1.0.59",
+    "@types/mailchimp__mailchimp_marketing": "^3.0.21",
+    "cors": "^2.8.5",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.10.1",
-    "pino": "^9.6.0"
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0",
+    "ts-node-dev": "^2.0.0"
   }
 }
