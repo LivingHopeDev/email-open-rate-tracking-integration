@@ -75,7 +75,7 @@ class EmailService {
             const telexResponse = yield axios_1.default.post(config_1.default.TELEX_WEBHOOK, webhookPayload);
             if (telexResponse.data.status == "error") {
                 const message = telexResponse.data.message;
-                throw Error(message);
+                throw new error_1.BadRequest(message);
             }
             return {
                 stats,
@@ -111,7 +111,7 @@ class EmailService {
             const telexResponse = yield axios_1.default.post(config_1.default.TELEX_WEBHOOK, webhookPayload);
             if (telexResponse.data.status == "error") {
                 const message = telexResponse.data.message;
-                throw Error(message);
+                throw new error_1.BadRequest(message);
             }
             return {
                 message: "Campaign stats fetched and sent successfully!",
