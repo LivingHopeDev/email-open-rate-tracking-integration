@@ -26,10 +26,10 @@
         "label": "interval",
         "type": "text",
         "required": true,
-        "default": "\"*/15****\""
+        "default": "*/5 * * * *"
       }
     ],
-    "target_url": "\"\"",
-    "tick_url": "https://email-tracking-f7t5.onrender.com/api/v1/email/stats/all"
+    "tick_url": "https://email-tracking-f7t5.onrender.com/api/v1/email/stats/all",
+    "target_url": "\"\""
   }
 }
