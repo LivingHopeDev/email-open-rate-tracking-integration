@@ -11,7 +11,7 @@ app.use(cors());
 // Routes
 app.use("/api/v1", rootRouter);
 
-app.use(errorHandler);
 app.use(routeNotFound);
+app.use(errorHandler);
 const PORT = config.PORT;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

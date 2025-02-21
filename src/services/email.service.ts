@@ -1,7 +1,7 @@
 import config from "../config";
 import { mailchimpClient } from "../config/mailChimp";
 import axios from "axios";
-import { ResourceNotFound } from "../middlewares/error";
+import { BadRequest, ResourceNotFound } from "../middlewares/error";
 export class EmailService {
   public async createCampaign(
     listId: string,
@@ -70,7 +70,7 @@ export class EmailService {
     );
     if (telexResponse.data.status == "error") {
       const message = telexResponse.data.message;
-      throw Error(message);
+      throw new BadRequest(message);
     }
     return {
       stats,
@@ -115,7 +115,7 @@ export class EmailService {
     );
     if (telexResponse.data.status == "error") {
       const message = telexResponse.data.message;
-      throw Error(message);
+      throw new BadRequest(message);
     }
     return {
       message: "Campaign stats fetched and sent successfully!",
