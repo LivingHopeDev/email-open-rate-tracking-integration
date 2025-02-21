@@ -72,11 +72,14 @@ class EmailService {
   - Bounces: ${report.bounces.hard_bounces}`,
             };
             //  Send to telex
-            const telexResponse = yield axios_1.default.post(config_1.default.TELEX_WEBHOOK, webhookPayload);
-            if (telexResponse.data.status == "error") {
-                const message = telexResponse.data.message;
-                throw new error_1.BadRequest(message);
-            }
+            // const telexResponse = await axios.post(
+            //   config.TELEX_WEBHOOK,
+            //   webhookPayload
+            // );
+            // if (telexResponse.data.status == "error") {
+            //   const message = telexResponse.data.message;
+            //   throw new BadRequest(message);
+            // }
             return {
                 stats,
             };
