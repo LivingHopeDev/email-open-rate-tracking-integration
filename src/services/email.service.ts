@@ -64,14 +64,15 @@ export class EmailService {
     };
 
     //  Send to telex
-    const telexResponse = await axios.post(
-      config.TELEX_WEBHOOK,
-      webhookPayload
-    );
-    if (telexResponse.data.status == "error") {
-      const message = telexResponse.data.message;
-      throw new BadRequest(message);
-    }
+    // const telexResponse = await axios.post(
+    //   config.TELEX_WEBHOOK,
+    //   webhookPayload
+    // );
+    // if (telexResponse.data.status == "error") {
+    //   const message = telexResponse.data.message;
+    //   throw new BadRequest(message);
+    // }
+
     return {
       stats,
     };

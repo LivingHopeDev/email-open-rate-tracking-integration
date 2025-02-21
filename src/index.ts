@@ -6,9 +6,11 @@ import cors from "cors";
 import path from "path";
 import fs from "fs";
 import { errorHandler, routeNotFound } from "./middlewares/error";
+import morgan from "morgan";
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(morgan("combined"));
 // connectDB();
 // Routes
 app.get("/integration.json", (req: Request, res: Response) => {
@@ -21,6 +23,17 @@ app.get("/integration.json", (req: Request, res: Response) => {
 });
 app.use("/api/v1", rootRouter);
 
+// morgan(function (tokens, req:Request, res:Response) {
+//   return [
+//     tokens.method(req, res),
+//     tokens.url(req, res),
+//     tokens.status(req, res),
+//     tokens.res(req, res, "content-length"),
+//     "-",
+//     tokens["response-time"](req, res),
+//     "ms",
+//   ].join(" ");
+// });
 app.use(routeNotFound);
 app.use(errorHandler);
 const PORT = config.PORT;
