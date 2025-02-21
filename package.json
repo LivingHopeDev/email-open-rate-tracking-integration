@@ -9,7 +9,7 @@
     "test:coverage": "jest --coverage",
     "start:dev": "ts-node-dev --respawn --transpile-only ./src/index",
     "start": "ts-node --transpile-only src/index.ts",
-    "build": "tsc"
+    "build": "tsc && xcopy /E /I src\\public dist\\public"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",

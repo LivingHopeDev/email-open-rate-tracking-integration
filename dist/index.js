@@ -16,7 +16,7 @@ app.use((0, cors_1.default)());
 // connectDB();
 // Routes
 app.get("/integration.json", (req, res) => {
-    const integration = fs_1.default.readFileSync(path_1.default.join(__dirname, "integration.json"), "utf-8");
+    const integration = fs_1.default.readFileSync(path_1.default.join(__dirname, "public/integration.json"), "utf-8");
     res.status(200).json(JSON.parse(integration));
 });
 app.use("/api/v1", index_1.default);

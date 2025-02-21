@@ -13,7 +13,7 @@ app.use(cors());
 // Routes
 app.get("/integration.json", (req: Request, res: Response) => {
   const integration = fs.readFileSync(
-    path.join(__dirname, "integration.json"),
+    path.join(__dirname, "public/integration.json"),
     "utf-8"
   );
 
