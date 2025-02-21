@@ -64,14 +64,14 @@ export class EmailService {
     };
 
     //  Send to telex
-    // const telexResponse = await axios.post(
-    //   config.TELEX_WEBHOOK,
-    //   webhookPayload
-    // );
-    // if (telexResponse.data.status == "error") {
-    //   const message = telexResponse.data.message;
-    //   throw new BadRequest(message);
-    // }
+    const telexResponse = await axios.post(
+      config.TELEX_WEBHOOK,
+      webhookPayload
+    );
+    if (telexResponse.data.status == "error") {
+      const message = telexResponse.data.message;
+      throw new BadRequest(message);
+    }
 
     return {
       stats,
@@ -92,14 +92,17 @@ export class EmailService {
         campaign.id
       );
 
-      formattedStats += `\n*${report.campaign_title}*\n`;
-      formattedStats += `- Total Sent: ${report.emails_sent}\n`;
-      formattedStats += `- Total Opens: ${report.opens.opens_total}\n`;
-      formattedStats += `- Unique Opens: ${report.opens.unique_opens}\n`;
-      formattedStats += `- Open Rate: ${report.opens.open_rate}%\n`;
-      formattedStats += `- Total Clicks: ${report.clicks.clicks_total}\n`;
-      formattedStats += `- Unsubscribes: ${report.unsubscribed}\n`;
-      formattedStats += `- Bounces: ${report.bounces.hard_bounces}\n\n`;
+      formattedStats += `
+*${report.campaign_title}*
+- Total Sent: ${report.emails_sent}
+- Total Opens: ${report.opens.opens_total}
+- Unique Opens: ${report.opens.unique_opens}
+- Open Rate: ${report.opens.open_rate}%
+- Total Clicks: ${report.clicks.clicks_total}
+- Unsubscribes: ${report.unsubscribed}
+- Bounces: ${report.bounces.hard_bounces}
+
+`;
     }
 
     // Send stats to Telex webhook

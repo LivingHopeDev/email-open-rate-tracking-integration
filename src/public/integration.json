@@ -20,13 +20,13 @@
       "total recipients",
       "click rate"
     ],
-    "author": "adetayo adewobi",
+    "author": "Adetayo Adewobi",
     "settings": [
       {
         "label": "interval",
         "type": "text",
         "required": true,
-        "default": "* * * * *"
+        "default": "*/30 * * * *"
       }
     ],
     "tick_url": "https://email-tracking-f7t5.onrender.com/api/v1/email/stats/all",

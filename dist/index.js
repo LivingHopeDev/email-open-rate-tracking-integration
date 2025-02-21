@@ -22,17 +22,6 @@ app.get("/integration.json", (req, res) => {
     res.status(200).json(JSON.parse(integration));
 });
 app.use("/api/v1", index_1.default);
-// morgan(function (tokens, req:Request, res:Response) {
-//   return [
-//     tokens.method(req, res),
-//     tokens.url(req, res),
-//     tokens.status(req, res),
-//     tokens.res(req, res, "content-length"),
-//     "-",
-//     tokens["response-time"](req, res),
-//     "ms",
-//   ].join(" ");
-// });
 app.use(error_1.routeNotFound);
 app.use(error_1.errorHandler);
 const PORT = config_1.default.PORT;
