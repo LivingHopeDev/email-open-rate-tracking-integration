@@ -7,7 +7,7 @@ import {
 const emailRouter: Router = Router();
 
 emailRouter.post("/send", createAndSendCampaign);
-emailRouter.get("/stats/all", getAllCampaignStats);
+emailRouter.post("/stats/all", getAllCampaignStats);
 emailRouter.get("/stats/:campaignId", getCampaignStats);
 
 export { emailRouter };
