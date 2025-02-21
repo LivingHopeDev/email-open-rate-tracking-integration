@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCampaignStats = exports.createAndSendCampaign = void 0;
+exports.getAllCampaignStats = exports.getCampaignStats = exports.createAndSendCampaign = void 0;
 const email_service_1 = require("../services/email.service");
 const asyncHandler_1 = __importDefault(require("../middlewares/asyncHandler"));
 const emailService = new email_service_1.EmailService();
@@ -39,4 +39,8 @@ exports.getCampaignStats = (0, asyncHandler_1.default)((req, res) => __awaiter(v
     }
     const stats = yield emailService.getCampaignStats(campaignId);
     res.status(200).json(stats);
+}));
+exports.getAllCampaignStats = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { message } = yield emailService.fetchAllCampaignStats();
+    res.status(200).json({ status: 200, message });
 }));

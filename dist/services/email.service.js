@@ -16,6 +16,7 @@ exports.EmailService = void 0;
 const config_1 = __importDefault(require("../config"));
 const mailChimp_1 = require("../config/mailChimp");
 const axios_1 = __importDefault(require("axios"));
+const error_1 = require("../middlewares/error");
 class EmailService {
     createCampaign(listId, subject, htmlContent, fromName, replyTo) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -71,13 +72,49 @@ class EmailService {
   - Bounces: ${report.bounces.hard_bounces}`,
             };
             //  Send to telex
-            const telexResponse = yield axios_1.default.post(config_1.default.TELEX_WEB_HOOK, webhookPayload);
+            const telexResponse = yield axios_1.default.post(config_1.default.TELEX_WEBHOOK, webhookPayload);
             if (telexResponse.data.status == "error") {
                 const message = telexResponse.data.message;
                 throw Error(message);
             }
             return {
                 stats,
+            };
+        });
+    }
+    fetchAllCampaignStats() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const campaignsResponse = yield mailChimp_1.mailchimpClient.campaigns.list();
+            const campaigns = (campaignsResponse === null || campaignsResponse === void 0 ? void 0 : campaignsResponse.campaigns) || [];
+            if (campaigns.length === 0) {
+                throw new error_1.ResourceNotFound("No campaigns found.");
+            }
+            let formattedStats = "";
+            for (const campaign of campaigns) {
+                const report = yield mailChimp_1.mailchimpClient.reports.getCampaignReport(campaign.id);
+                formattedStats += `\n*${report.campaign_title}*\n`;
+                formattedStats += `- Total Sent: ${report.emails_sent}\n`;
+                formattedStats += `- Total Opens: ${report.opens.opens_total}\n`;
+                formattedStats += `- Unique Opens: ${report.opens.unique_opens}\n`;
+                formattedStats += `- Open Rate: ${report.opens.open_rate}%\n`;
+                formattedStats += `- Total Clicks: ${report.clicks.clicks_total}\n`;
+                formattedStats += `- Unsubscribes: ${report.unsubscribed}\n`;
+                formattedStats += `- Bounces: ${report.bounces.hard_bounces}\n\n`;
+            }
+            // Send stats to Telex webhook
+            const webhookPayload = {
+                event_name: "email_campaign_stats",
+                username: "MailchimpBot",
+                status: "success",
+                message: ` *Campaign Performance Overview:*\n${formattedStats}`,
+            };
+            const telexResponse = yield axios_1.default.post(config_1.default.TELEX_WEBHOOK, webhookPayload);
+            if (telexResponse.data.status == "error") {
+                const message = telexResponse.data.message;
+                throw Error(message);
+            }
+            return {
+                message: "Campaign stats fetched and sent successfully!",
             };
         });
     }

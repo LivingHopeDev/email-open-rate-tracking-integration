@@ -1,6 +1,7 @@
 import config from "../config";
 import { mailchimpClient } from "../config/mailChimp";
 import axios from "axios";
+import { ResourceNotFound } from "../middlewares/error";
 export class EmailService {
   public async createCampaign(
     listId: string,
@@ -64,7 +65,7 @@ export class EmailService {
 
     //  Send to telex
     const telexResponse = await axios.post(
-      config.TELEX_WEB_HOOK,
+      config.TELEX_WEBHOOK,
       webhookPayload
     );
     if (telexResponse.data.status == "error") {
@@ -73,6 +74,51 @@ export class EmailService {
     }
     return {
       stats,
+    };
+  }
+
+  public async fetchAllCampaignStats() {
+    const campaignsResponse = await mailchimpClient.campaigns.list();
+    const campaigns = campaignsResponse?.campaigns || [];
+    if (campaigns.length === 0) {
+      throw new ResourceNotFound("No campaigns found.");
+    }
+
+    let formattedStats = "";
+
+    for (const campaign of campaigns) {
+      const report = await mailchimpClient.reports.getCampaignReport(
+        campaign.id
+      );
+
+      formattedStats += `\n*${report.campaign_title}*\n`;
+      formattedStats += `- Total Sent: ${report.emails_sent}\n`;
+      formattedStats += `- Total Opens: ${report.opens.opens_total}\n`;
+      formattedStats += `- Unique Opens: ${report.opens.unique_opens}\n`;
+      formattedStats += `- Open Rate: ${report.opens.open_rate}%\n`;
+      formattedStats += `- Total Clicks: ${report.clicks.clicks_total}\n`;
+      formattedStats += `- Unsubscribes: ${report.unsubscribed}\n`;
+      formattedStats += `- Bounces: ${report.bounces.hard_bounces}\n\n`;
+    }
+
+    // Send stats to Telex webhook
+    const webhookPayload = {
+      event_name: "email_campaign_stats",
+      username: "MailchimpBot",
+      status: "success",
+      message: ` *Campaign Performance Overview:*\n${formattedStats}`,
+    };
+
+    const telexResponse = await axios.post(
+      config.TELEX_WEBHOOK,
+      webhookPayload
+    );
+    if (telexResponse.data.status == "error") {
+      const message = telexResponse.data.message;
+      throw Error(message);
+    }
+    return {
+      message: "Campaign stats fetched and sent successfully!",
     };
   }
 }

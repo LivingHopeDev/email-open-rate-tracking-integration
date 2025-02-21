@@ -45,3 +45,10 @@ export const getCampaignStats = asyncHandler(
     res.status(200).json(stats);
   }
 );
+
+export const getAllCampaignStats = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { message } = await emailService.fetchAllCampaignStats();
+    res.status(200).json({ status: 200, message });
+  }
+);

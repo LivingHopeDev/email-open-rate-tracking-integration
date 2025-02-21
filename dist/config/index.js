@@ -11,6 +11,6 @@ const config = {
     NODE_ENV: process.env.NODE_ENV,
     FROM_EMAIL: process.env.FROM_EMAIL,
     MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY,
-    TELEX_WEB_HOOK: process.env.TELEX_WEB_HOOK,
+    TELEX_WEBHOOK: process.env.TELEX_WEBHOOK,
 };
 exports.default = config;
