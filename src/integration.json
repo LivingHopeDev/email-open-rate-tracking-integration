@@ -1,0 +1,35 @@
+{
+  "data": {
+    "date": {
+      "created_at": "2025-02-21",
+      "updated_at": "2025-02-21"
+    },
+    "descriptions": {
+      "app_name": "MailTracker",
+      "app_description": "This integration tracks how many recipients open marketing emails",
+      "app_logo": "https://res.cloudinary.com/duj0ly0ul/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1740105501/assets/email-icon_esexjy.jpg",
+      "app_url": "https://email-tracking-f7t5.onrender.com",
+      "background_color": "#fff"
+    },
+    "is_active": true,
+    "integration_type": "interval",
+    "integration_category": "E-commerce & Retail",
+    "key_features": [
+      "bounce rate analysis",
+      "email open rate",
+      "total recipients",
+      "click rate"
+    ],
+    "author": "adetayo adewobi",
+    "settings": [
+      {
+        "label": "interval",
+        "type": "text",
+        "required": true,
+        "default": "\"*/15****\""
+      }
+    ],
+    "target_url": "\"\"",
+    "tick_url": "https://email-tracking-f7t5.onrender.com/api/v1/email/stats/all"
+  }
+}
