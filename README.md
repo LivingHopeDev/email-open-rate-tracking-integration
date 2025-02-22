@@ -121,8 +121,9 @@ yarn run start:dev
 
 ### 2. Get All Campaign Stats
 
-**Endpoint**
-`POST /api/v1/email/stats/all`
+- Telex sends a `POST` request to the tick url
+  **Endpoint**
+  `POST /api/v1/email/stats/all`
 
 **Response:**
 
