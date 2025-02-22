@@ -122,7 +122,7 @@ yarn run start:dev
 ### 2. Get All Campaign Stats
 
 **Endpoint**
-`GET /api/v1/email/stats/all`
+`POST /api/v1/email/stats/all`
 
 **Response:**
 
