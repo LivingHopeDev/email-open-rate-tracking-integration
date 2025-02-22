@@ -73,6 +73,7 @@ Check `.env.example ` file
 ```env
 
 MAILCHIMP_API_KEY= # Your mailchimp API key
+MAILCHIMP_DATA_CENTER="usX"
 FROM_EMAIL=   # Your mailchimp email
 TELEX_WEB_HOOK=   # Your webhook from telex channel
 
