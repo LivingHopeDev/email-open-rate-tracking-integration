@@ -9,6 +9,6 @@ const index_1 = __importDefault(require("./index"));
 const client = require("@mailchimp/mailchimp_marketing");
 client.setConfig({
     apiKey: index_1.default.MAILCHIMP_API_KEY,
-    server: "us10",
+    server: index_1.default.MAILCHIMP_DATA_CENTER,
 });
 exports.mailchimpClient = client;

@@ -4,7 +4,7 @@ const client = require("@mailchimp/mailchimp_marketing");
 
 client.setConfig({
   apiKey: config.MAILCHIMP_API_KEY,
-  server: "us10",
+  server: config.MAILCHIMP_DATA_CENTER,
 });
 
 export const mailchimpClient = client;
