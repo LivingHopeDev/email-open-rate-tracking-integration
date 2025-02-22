@@ -16,6 +16,7 @@ This integration fetches campaign performance statistics from Mailchimp and send
   - [Environment Variables](#environment-variables)
   - [Running the Application](#running-the-application)
 - [Run Test](#run-test)
+- [Screenshot](#Screenshot)
 - [API Documentation](#api-documentation)
 - [Contributing](#contributing)
 - [License](#license)
@@ -165,6 +166,10 @@ The server will start on the specified PORT in your .env file. If PORT is set to
 ```
 yarn test
 ```
+
+### Screenshot
+
+![integration screenshot](./telex.png)
 
 ### License
 
