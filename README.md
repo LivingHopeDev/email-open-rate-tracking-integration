@@ -90,6 +90,27 @@ yarn run start:dev
 
 ```
 
+## API Usage
+
+### Send email campaigne
+
+- Simulate sending an email from your mailchimp account by using the API Endpoint below:
+- The ListId is the Audience ID from your Mailchimp account that contains the list of email subscriber.
+- You can use the details in the documentation for testing.
+
+```
+POST /api/v1/email/send
+```
+
+### Receive Notification about the status of the email campaigne
+
+- Telex sends a notification to the channel every 30 minutes to display the number of emails sent and how many subscribers have opened the email with other information.
+- Telex will hit this tick endpoint.
+
+```
+POST /api/v1/email/stats/all
+```
+
 # API Documentation
 
 ### 1. Send Email Campaign
